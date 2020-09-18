@@ -1,6 +1,26 @@
 spring:
   application:
     name: user
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
 
 server:
   port: 8888
+
+logging:
+  level:
+    root: debug
+
+say-hello:
+  ribbon:
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 10
+    retryableStatusCodes: 500,503,408
+    OkToRetryOnAllOperations: true
+    ServerListRefreshInterval: 5000
+    ConnectTimeout: 5000
+    ReadTimeout: 10000
+    listOfServers: localhost:8090,localhost:9092,localhost:9999
+

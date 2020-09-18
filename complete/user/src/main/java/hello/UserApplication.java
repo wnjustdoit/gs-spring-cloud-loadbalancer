@@ -1,5 +1,8 @@
 package hello;
 
+import com.netflix.loadbalancer.Server;
+import com.netflix.loadbalancer.ServerList;
+import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Mono;
 
 import org.springframework.boot.SpringApplication;
@@ -20,7 +23,10 @@ public class UserApplication {
 	private final WebClient.Builder loadBalancedWebClientBuilder;
 	private final ReactorLoadBalancerExchangeFilterFunction lbFunction;
 
-	public UserApplication(WebClient.Builder webClientBuilder,
+	@Autowired(required = false)
+	private ServerList<Server> serverList;
+
+	public UserApplication(WebClient.Builder webClientBuilder, @Autowired(required = false)
 			ReactorLoadBalancerExchangeFilterFunction lbFunction) {
 		this.loadBalancedWebClientBuilder = webClientBuilder;
 		this.lbFunction = lbFunction;
